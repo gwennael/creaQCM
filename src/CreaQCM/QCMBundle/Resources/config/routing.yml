@@ -1,0 +1,3 @@
+crea_qcmqcm_homepage:
+    path:     /
+    defaults: { _controller: CreaQCMQCMBundle:Default:index }

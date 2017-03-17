@@ -1,0 +1,4 @@
+services:
+#    crea_qcmqcm.example:
+#        class: CreaQCM\QCMBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
