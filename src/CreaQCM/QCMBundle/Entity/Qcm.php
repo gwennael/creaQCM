@@ -33,6 +33,11 @@ class Qcm
      */
     protected $questions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Resultat", mappedBy="qcm")
+     */
+    protected $results;
+
 
     /**
      * Get id
@@ -67,6 +72,7 @@ class Qcm
     {
         return $this->name;
     }
+
     /**
      * Constructor
      */
@@ -107,5 +113,39 @@ class Qcm
     public function getQuestions()
     {
         return $this->questions;
+    }
+
+    /**
+     * Add result
+     *
+     * @param \CreaQCM\QCMBundle\Entity\Resultat $result
+     *
+     * @return Qcm
+     */
+    public function addResult(\CreaQCM\QCMBundle\Entity\Resultat $result)
+    {
+        $this->results[] = $result;
+
+        return $this;
+    }
+
+    /**
+     * Remove result
+     *
+     * @param \CreaQCM\QCMBundle\Entity\Resultat $result
+     */
+    public function removeResult(\CreaQCM\QCMBundle\Entity\Resultat $result)
+    {
+        $this->results->removeElement($result);
+    }
+
+    /**
+     * Get results
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResults()
+    {
+        return $this->results;
     }
 }

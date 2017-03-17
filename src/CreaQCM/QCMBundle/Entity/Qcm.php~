@@ -33,6 +33,11 @@ class Qcm
      */
     protected $questions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Resultat", mappedBy="qcm")
+     */
+    protected $results;
+
 
     /**
      * Get id
@@ -67,6 +72,7 @@ class Qcm
     {
         return $this->name;
     }
+
     /**
      * Constructor
      */
