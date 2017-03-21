@@ -17,6 +17,7 @@ class QuestionType extends AbstractType
             'entry_type' => ChoiceType::class,
             'allow_add'    => true,
             'by_reference' => false,
+            'allow_delete' => true,
         ));
     }
 

@@ -36,7 +36,7 @@ class Question
     private $responses;
 
     /**
-     * @ORM\OneToMany(targetEntity="Choice", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="Choice", mappedBy="question", cascade={"persist"})
      */
     protected $choices;
 
@@ -123,6 +123,7 @@ class Question
     public function addChoice(\CreaQCM\QCMBundle\Entity\Choice $choice)
     {
         $this->choices[] = $choice;
+        $choice->setQuestion($this);
 
         return $this;
     }

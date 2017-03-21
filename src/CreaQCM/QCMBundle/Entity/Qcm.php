@@ -29,7 +29,7 @@ class Qcm
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="qcm")
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="qcm", cascade={"persist"})
      */
     protected $questions;
 
@@ -92,6 +92,7 @@ class Qcm
     public function addQuestion(\CreaQCM\QCMBundle\Entity\Question $question)
     {
         $this->questions[] = $question;
+        $question->setQcm($this);
 
         return $this;
     }

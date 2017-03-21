@@ -4,4 +4,4 @@ crea_qcmqcm_homepage:
 
 crea_qcmqcm_generate:
     path:     /generer
-    defaults: { _controller: CreaQCMQCMBundle:Generate:get }
+    defaults: { _controller: CreaQCMQCMBundle:Generate:new }

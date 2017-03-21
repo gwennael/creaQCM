@@ -43,4 +43,22 @@ class GenerateController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function newAction(Request $request){
+        $qcm = new Qcm();
+
+        $form = $this->createForm(QcmType::class, $qcm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $eManager = $this->getDoctrine()->getManager();
+            $eManager->persist($qcm);
+
+            return $this->render('CreaQCMQCMBundle::layout.html.twig');
+        }
+
+        return $this->render('CreaQCMQCMBundle:Generate:form.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
 }
