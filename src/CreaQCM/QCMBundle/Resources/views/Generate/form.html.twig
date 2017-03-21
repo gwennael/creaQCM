@@ -46,7 +46,28 @@
                 e.preventDefault();
                 addQuestionForm($collectionHolderQuestion, $newLinkLiQuestion);
             });
+			
+			// Ajout d'une possibilité de réponse pour une question
+            var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
+            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
 
+            var sizeListQuestions = $('ul.questions li').length;
+            var sizeListChoices = $('ul.questions ul.choices').length;
+            var collectionHolderChoice = $('ul.questions ul.choices');
+
+            //console.log($('ul.questions li').eq(sizeListQuestions-2));
+            //console.log($('ul.questions ul.choices li').length);
+
+            var collectionHolderChoiceAdd = $('ul.questions li').eq(sizeListQuestions-2);
+            collectionHolderChoiceAdd.append($newLinkLiChoice);
+            //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
+            collectionHolderChoice.data('index', sizeListChoices);
+
+            $addChoiceLink.on('click', function(e) {
+                e.preventDefault();
+                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm(collectionHolderChoice, $newLinkLiChoice);
+            });
         });
 
         function addQuestionForm($collectionHolder, $newLinkLi) {

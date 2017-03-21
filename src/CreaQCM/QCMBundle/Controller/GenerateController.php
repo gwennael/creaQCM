@@ -46,6 +46,15 @@ class GenerateController extends Controller
 
     public function newAction(Request $request){
         $qcm = new Qcm();
+		
+		$choice1_1 = new Choice();
+        //$choice1_1->setValue('Test value 1');
+
+
+        $question1 = new Question();
+        //$question1->setAsk('Test question');
+        $question1->getChoices()->add($choice1_1);
+        $qcm->getQuestions()->add($question1);
 
         $form = $this->createForm(QcmType::class, $qcm);
         $form->handleRequest($request);
@@ -53,6 +62,10 @@ class GenerateController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $eManager = $this->getDoctrine()->getManager();
             $eManager->persist($qcm);
+            $eManager->flush();
+
+            //var_dump($result);
+            //var_dump($qcm);
 
             return $this->render('CreaQCMQCMBundle::layout.html.twig');
         }

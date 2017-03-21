@@ -5,6 +5,7 @@ namespace CreaQCM\QCMBundle\Form;
 use CreaQCM\QCMBundle\Entity\Qcm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,6 +20,7 @@ class QcmType extends AbstractType
             'by_reference' => false,
             'allow_delete' => true,
         ));
+		$builder->add('Enregistrer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
