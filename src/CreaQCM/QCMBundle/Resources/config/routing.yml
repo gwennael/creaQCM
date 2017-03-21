@@ -1,3 +1,7 @@
 crea_qcmqcm_homepage:
     path:     /
-    defaults: { _controller: CreaQCMQCMBundle:Default:index }
+    defaults: { _controller: CreaQCMQCMBundle:QCM:index }
+
+crea_qcmqcm_generate:
+    path:     /generer
+    defaults: { _controller: CreaQCMQCMBundle:Generate:get }

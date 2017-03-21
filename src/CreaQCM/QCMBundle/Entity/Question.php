@@ -31,16 +31,14 @@ class Question
     /**
      * @var array
      *
-     * @ORM\Column(name="response", type="array")
+     * @ORM\Column(name="responses", type="array")
      */
-    private $response;
+    private $responses;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="choice", type="array")
+     * @ORM\OneToMany(targetEntity="Choice", mappedBy="question")
      */
-    private $choice;
+    protected $choices;
 
     /**
      * @ORM\ManyToOne(targetEntity="Qcm", inversedBy="questions")
@@ -50,9 +48,17 @@ class Question
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->choices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -84,51 +90,61 @@ class Question
     }
 
     /**
-     * Set response
+     * Set responses
      *
-     * @param array $response
+     * @param array $responses
      *
      * @return Question
      */
-    public function setResponse($response)
+    public function setResponses($responses)
     {
-        $this->response = $response;
+        $this->responses = $responses;
 
         return $this;
     }
 
     /**
-     * Get response
+     * Get responses
      *
      * @return array
      */
-    public function getResponse()
+    public function getResponses()
     {
-        return $this->response;
+        return $this->responses;
     }
 
     /**
-     * Set choice
+     * Add choice
      *
-     * @param array $choice
+     * @param \CreaQCM\QCMBundle\Entity\Choice $choice
      *
      * @return Question
      */
-    public function setChoice($choice)
+    public function addChoice(\CreaQCM\QCMBundle\Entity\Choice $choice)
     {
-        $this->choice = $choice;
+        $this->choices[] = $choice;
 
         return $this;
     }
 
     /**
-     * Get choice
+     * Remove choice
      *
-     * @return array
+     * @param \CreaQCM\QCMBundle\Entity\Choice $choice
      */
-    public function getChoice()
+    public function removeChoice(\CreaQCM\QCMBundle\Entity\Choice $choice)
     {
-        return $this->choice;
+        $this->choices->removeElement($choice);
+    }
+
+    /**
+     * Get choices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChoices()
+    {
+        return $this->choices;
     }
 
     /**

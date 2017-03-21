@@ -1,0 +1,157 @@
+{% extends 'CreaQCMQCMBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">Génération d'un QCM:</div>
+        </div>
+        <div class="panel-body">
+            {{ form_start(form) }}
+            {{ form_row(form.name) }}
+
+            <h3>Questions</h3>
+            <ul class="questions" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+                {% for question in form.questions %}
+                    <li class="question">{{ form_row(question.ask) }} <br>
+                        {{ form_label(question.choices) }}
+                        <ul class="choices" data-prototype="{{ form_widget(question.choices.vars.prototype)|e('html_attr') }}">
+                            {% for choice in question.choices %}
+                                <li>{{ form_row(choice.value) }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+
+            // Ajout d'une question au QCM
+            var $collectionHolderQuestion;
+            var $addQuestionLink = $('<a href="#" class="add_question_link">Ajouter une question</a>');
+            var $newLinkLiQuestion = $('<li></li>').append($addQuestionLink);
+
+            $collectionHolderQuestion = $('ul.questions');
+            $collectionHolderQuestion.append($newLinkLiQuestion);
+            $collectionHolderQuestion.data('index', $collectionHolderQuestion.find(':input').length);
+
+            console.log($collectionHolderQuestion.find(':input').length);
+
+            $addQuestionLink.on('click', function(e) {
+                e.preventDefault();
+                addQuestionForm($collectionHolderQuestion, $newLinkLiQuestion);
+            });
+
+        });
+
+        function addQuestionForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            //console.log(prototype);
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+            //console.log(index);
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            //console.log(prototype.replace(/__name__/g, index));
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm+"<br>");
+
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-question">x</a>');
+            $newLinkLi.before($newFormLi);
+
+            // handle the removal, just for this example
+            $('.remove-question').click(function(e) {
+                e.preventDefault();
+                $(this).parent().remove();
+                return false;
+            });
+
+            // Ajout d'une possibilité de réponse pour une question
+            var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
+            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
+
+            var sizeListQuestions = $('ul.questions li').length;
+            var sizeListChoices = $('ul.questions ul.choices').length;
+            var collectionHolderChoice = $('ul.questions ul.choices');
+
+            //console.log($('ul.questions li').eq(sizeListQuestions-2));
+            //console.log($('ul.questions ul.choices li').length);
+
+            var collectionHolderChoiceAdd = $('ul.questions li').eq(sizeListQuestions-2);
+            collectionHolderChoiceAdd.append($newLinkLiChoice);
+            //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
+            collectionHolderChoice.data('index', sizeListChoices);
+
+            $addChoiceLink.on('click', function(e) {
+                e.preventDefault();
+                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm(collectionHolderChoice, $newLinkLiChoice);
+            });
+        }
+
+        function addChoiceForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            console.log(prototype);
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+            console.log(index);
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            console.log(newForm);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-choice">x</a>');
+            $newLinkLi.before($newFormLi);
+
+            // handle the removal, just for this example
+            $('.remove-choice').click(function(e) {
+                e.preventDefault();
+                $(this).parent().remove();
+                return false;
+            });
+        }
+
+
+
+        // Ajout d'une possibilité de réponse pour une question
+        /*var $collectionHolderChoice;
+        var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
+        var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
+
+        console.log($collectionHolder);
+
+        $collectionHolderChoice = $('ul.questions').find('.choices');
+        $collectionHolderChoice.append($newLinkLiChoice);
+        $collectionHolderChoice.data('index', $collectionHolderChoice.find(':input').length);
+
+        $addChoiceLink.on('click', function(e) {
+            e.preventDefault();
+            addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+        });*/
+    </script>
+
+{% endblock %}

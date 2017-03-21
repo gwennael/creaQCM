@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Crea-QCM{% endblock %}</title>
+
+    {% block stylesheets %}
+        <!--<link type="text/css" rel="stylesheet" href="../../../web/assets/vendor/bootstrap/dist/css/bootstrap.min.css"  media="screen,projection"/>-->
+        <link type="text/css" rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset('/assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}"  media="screen,projection">
+        <link type="text/css" rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() ~ asset('/assets/css/main.css') }}"  media="screen,projection">
+    {% endblock %}
+    {% block javascripts_entete %}
+        <!--<script type="text/javascript" src="../../../web/assets/vendor/jquery/dist/jquery.min.js"></script>-->
+        <script src="{{ app.request.getSchemeAndHttpHost() ~ asset('/assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+    {% endblock %}
+</head>
+
+<body>
+<div class="container">
+    <div id="header" class="page-header text-center">
+        <h1>Crea-QCM</h1>
+    </div>
+    <div class="col-lg-12">
+        {% block entete %}
+        {% endblock %}
+    </div>
+    <div id="content" class="col-lg-12">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="col-lg-12">
+        <hr>
+        <p>© {{ 'now'|date('Y') }} - Gwennaël MARTIN, Sandirane KUMARASAMY, Jean Yannick NOAH MEKONGO et Valentyn SHCHERBOV</p>
+    </footer>
+</div>
+
+{% block javascripts %}
+    <!--<script type="text/javascript" src="../../../web/assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <script src="{{ app.request.getSchemeAndHttpHost() ~ asset('/assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>

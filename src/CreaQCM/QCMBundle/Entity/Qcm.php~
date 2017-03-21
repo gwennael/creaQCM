@@ -40,9 +40,18 @@ class Qcm
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->results = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -71,14 +80,6 @@ class Qcm
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -113,5 +114,39 @@ class Qcm
     public function getQuestions()
     {
         return $this->questions;
+    }
+
+    /**
+     * Add result
+     *
+     * @param \CreaQCM\QCMBundle\Entity\Resultat $result
+     *
+     * @return Qcm
+     */
+    public function addResult(\CreaQCM\QCMBundle\Entity\Resultat $result)
+    {
+        $this->results[] = $result;
+
+        return $this;
+    }
+
+    /**
+     * Remove result
+     *
+     * @param \CreaQCM\QCMBundle\Entity\Resultat $result
+     */
+    public function removeResult(\CreaQCM\QCMBundle\Entity\Resultat $result)
+    {
+        $this->results->removeElement($result);
+    }
+
+    /**
+     * Get results
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResults()
+    {
+        return $this->results;
     }
 }

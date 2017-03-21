@@ -4,10 +4,10 @@ namespace CreaQCM\QCMBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class QCMController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('CreaQCMQCMBundle:Default:index.html.twig');
+        return $this->render('CreaQCMQCMBundle::layout.html.twig');
     }
 }

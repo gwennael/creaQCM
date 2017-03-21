@@ -42,10 +42,11 @@ class Resultat
     protected $qcm;
 
 
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {

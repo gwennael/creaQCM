@@ -42,10 +42,11 @@ class Resultat
     protected $qcm;
 
 
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -99,5 +100,28 @@ class Resultat
     {
         return $this->result;
     }
-}
 
+    /**
+     * Set qcm
+     *
+     * @param \CreaQCM\QCMBundle\Entity\Qcm $qcm
+     *
+     * @return Resultat
+     */
+    public function setQcm(\CreaQCM\QCMBundle\Entity\Qcm $qcm = null)
+    {
+        $this->qcm = $qcm;
+
+        return $this;
+    }
+
+    /**
+     * Get qcm
+     *
+     * @return \CreaQCM\QCMBundle\Entity\Qcm
+     */
+    public function getQcm()
+    {
+        return $this->qcm;
+    }
+}
