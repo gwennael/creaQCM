@@ -7,22 +7,27 @@
             <div class="panel-title">Génération d'un QCM:</div>
         </div>
         <div class="panel-body">
-            {{ form_start(form) }}
+            {{ form_start(form, {attr: {'class': ''}} ) }}
             {{ form_row(form.name) }}
 
             <h3>Questions</h3>
             <ul class="questions" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
                 {% for question in form.questions %}
                     <li class="question">{{ form_row(question.ask) }} <br>
-                        {{ form_label(question.choices) }}
+
                         <ul class="choices" data-prototype="{{ form_widget(question.choices.vars.prototype)|e('html_attr') }}">
                             {% for choice in question.choices %}
-                                <li>{{ form_row(choice.value) }}</li>
+                                <br><li>{{ form_row(choice.value) }}</li>
                             {% endfor %}
                         </ul>
+                        <br><br><br><br>
                     </li>
                 {% endfor %}
             </ul>
+
+            {{ form_rest(form) }}
+            {{ form_widget(form.Enregistrer) }}
+
             {{ form_end(form) }}
 
         </div>
@@ -47,6 +52,9 @@
             $addQuestionLink.on('click', function(e) {
                 e.preventDefault();
                 addQuestionForm($collectionHolderQuestion, $newLinkLiQuestion);
+                console.log($(this).parent().parent().find('li.question:last').find('div.form-group').eq(1));
+                //$('<br>').insertAfter($(this).parent().parent().find('li.question:last').find('div.form-group').eq(1));
+                ($(this).parent().parent().find('li.question:last')).append('<br><br><br><br>');
             });
 
             // Ajout d'une possibilité de réponse pour une question
@@ -111,12 +119,16 @@
             $collectionHolder.data('index', index + 1);
 
             // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormLi = $('<li></li>').append(newForm+"<br>");
+            var $newFormLiDiv = $('<div class="form-group"></div>').append(newForm);
+            var $newFormLi = $('<li class="question"></li>').append($newFormLiDiv);
 
             // also add a remove button, just for this example
             $newFormLi.append('<a href="#" class="remove-question">x</a>');
-            $newFormLi.append('<div class="indexQuestion">'+index+'</div>');
+            $newFormLi.append('<div class="indexQuestion" hidden>'+index+'</div>');
+            $newFormLi.append('<br>');
+            //$newFormLi.append('<ul class="choices"></ul>');
             $newLinkLi.before($newFormLi);
+
 
             // handle the removal, just for this example
             $('.remove-question').click(function(e) {
@@ -128,7 +140,9 @@
             // Ajout d'une possibilité de réponse pour une question
 
             var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
-            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
+            var $addChoiceLinkLi = $('<li></li>').append($addChoiceLink);
+            var $newFormUl = $('<ul class="choices"></ul>').append($addChoiceLinkLi);
+            var $newLinkLiChoice = $('<li></li>').append($newFormUl);
 
             var sizeListQuestions = $('ul.questions li').length;
             var sizeListChoices = $('ul.questions ul.choices').length;
@@ -148,7 +162,7 @@
             $addChoiceLink.on('click', function(e) {
                 e.preventDefault();
                 //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
-                addChoiceForm(collectionHolderChoice, $newLinkLiChoice, indexQuestion);
+                addChoiceForm(collectionHolderChoice, $addChoiceLinkLi, indexQuestion);
             });
 
 

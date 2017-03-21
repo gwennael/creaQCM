@@ -70,7 +70,8 @@ class GenerateController extends Controller
             //var_dump($result);
             //var_dump($qcm);
 
-            return $this->render('CreaQCMQCMBundle::layout.html.twig');
+            //return $this->render('CreaQCMQCMBundle::layout.html.twig');
+            return $this->redirect($this->generateUrl('crea_qcmqcm_homepage'));
         }
 
         return $this->render('CreaQCMQCMBundle:Generate:form.html.twig', array(
