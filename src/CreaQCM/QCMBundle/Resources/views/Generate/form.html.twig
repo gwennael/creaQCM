@@ -42,89 +42,58 @@
 
             console.log($collectionHolderQuestion.find(':input').length);
 
+            //addQuestionForm($collectionHolderQuestion, $newLinkLiQuestion);
+
             $addQuestionLink.on('click', function(e) {
                 e.preventDefault();
                 addQuestionForm($collectionHolderQuestion, $newLinkLiQuestion);
             });
-			
+
+            // Ajout d'une possibilité de réponse pour une question
+            var $collectionHolderChoice;
+            var $addChoiceLink = $('<a href="#" class="add_question_link">Ajouter un choix</a>');
+            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
+
+            $collectionHolderChoice = $('ul.choices');
+            $collectionHolderChoice.append($newLinkLiChoice);
+            $collectionHolderChoice.data('index', $collectionHolderChoice.find(':input').length);
+
+            console.log($collectionHolderChoice.find(':input').length);
+
+            $addChoiceLink.on('click', function(e) {
+                e.preventDefault();
+                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+            });
+
 			// Ajout d'une possibilité de réponse pour une question
-            var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
+            /*var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
             var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
 
             var sizeListQuestions = $('ul.questions li').length;
             var sizeListChoices = $('ul.questions ul.choices').length;
             var collectionHolderChoice = $('ul.questions ul.choices');
 
+            console.log($collectionHolderQuestion.find(':input').length);
+
             //console.log($('ul.questions li').eq(sizeListQuestions-2));
             //console.log($('ul.questions ul.choices li').length);
 
             var collectionHolderChoiceAdd = $('ul.questions li').eq(sizeListQuestions-2);
-            collectionHolderChoiceAdd.append($newLinkLiChoice);
+            collectionHolderChoice.append($newLinkLiChoice);
             //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
             collectionHolderChoice.data('index', sizeListChoices);
+
+            //addChoiceForm(collectionHolderChoice, $newLinkLiChoice);
 
             $addChoiceLink.on('click', function(e) {
                 e.preventDefault();
                 //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
                 addChoiceForm(collectionHolderChoice, $newLinkLiChoice);
-            });
+            });*/
         });
 
         function addQuestionForm($collectionHolder, $newLinkLi) {
-            // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
-            //console.log(prototype);
-
-            // get the new index
-            var index = $collectionHolder.data('index');
-            //console.log(index);
-
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__/g, index);
-            //console.log(prototype.replace(/__name__/g, index));
-
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-
-            // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormLi = $('<li></li>').append(newForm+"<br>");
-
-            // also add a remove button, just for this example
-            $newFormLi.append('<a href="#" class="remove-question">x</a>');
-            $newLinkLi.before($newFormLi);
-
-            // handle the removal, just for this example
-            $('.remove-question').click(function(e) {
-                e.preventDefault();
-                $(this).parent().remove();
-                return false;
-            });
-
-            // Ajout d'une possibilité de réponse pour une question
-            var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
-            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
-
-            var sizeListQuestions = $('ul.questions li').length;
-            var sizeListChoices = $('ul.questions ul.choices').length;
-            var collectionHolderChoice = $('ul.questions ul.choices');
-
-            //console.log($('ul.questions li').eq(sizeListQuestions-2));
-            //console.log($('ul.questions ul.choices li').length);
-
-            var collectionHolderChoiceAdd = $('ul.questions li').eq(sizeListQuestions-2);
-            collectionHolderChoiceAdd.append($newLinkLiChoice);
-            //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
-            collectionHolderChoice.data('index', sizeListChoices);
-
-            $addChoiceLink.on('click', function(e) {
-                e.preventDefault();
-                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
-                addChoiceForm(collectionHolderChoice, $newLinkLiChoice);
-            });
-        }
-
-        function addChoiceForm($collectionHolder, $newLinkLi) {
             // Get the data-prototype explained earlier
             var prototype = $collectionHolder.data('prototype');
             console.log(prototype);
@@ -136,6 +105,108 @@
             // Replace '__name__' in the prototype's HTML to
             // instead be a number based on how many items we have
             var newForm = prototype.replace(/__name__/g, index);
+            console.log(prototype.replace(/__name__/g, index));
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm+"<br>");
+
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-question">x</a>');
+            $newFormLi.append('<div class="indexQuestion">'+index+'</div>');
+            $newLinkLi.before($newFormLi);
+
+            // handle the removal, just for this example
+            $('.remove-question').click(function(e) {
+                e.preventDefault();
+                $(this).parent().remove();
+                return false;
+            });
+
+            // Ajout d'une possibilité de réponse pour une question
+
+            var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
+            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
+
+            var sizeListQuestions = $('ul.questions li').length;
+            var sizeListChoices = $('ul.questions ul.choices').length;
+            var collectionHolderChoice = $('ul.questions ul.choices');
+
+            //console.log($('ul.questions li').eq(sizeListQuestions-2));
+            //console.log($('ul.questions ul.choices li').length);
+
+            var collectionHolderChoiceAdd = $('ul.questions li').eq(sizeListQuestions-2);
+            collectionHolderChoiceAdd.append($newLinkLiChoice);
+            //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
+            collectionHolderChoice.data('index', sizeListChoices);
+
+            var indexQuestion = $('ul.questions li').eq(sizeListQuestions-2).find('div.indexQuestion').text();
+            console.log(indexQuestion);
+
+            $addChoiceLink.on('click', function(e) {
+                e.preventDefault();
+                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm(collectionHolderChoice, $newLinkLiChoice, indexQuestion);
+            });
+
+
+            /*var $collectionHolderChoice;
+            var $addChoiceLink = $('<a href="#" class="add_question_link">Ajouter un choix</a>');
+            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
+
+            $collectionHolderChoice = $('ul.questions li:last ul.choices');
+            $collectionHolderChoice.append($newLinkLiChoice);
+            $collectionHolderChoice.data('index', $collectionHolderChoice.find(':input').length);
+
+            console.log($collectionHolderChoice.find(':input').length);
+
+            $addChoiceLink.on('click', function(e) {
+                e.preventDefault();
+                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+            });*/
+
+
+            /*var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
+            var $newLinkLiChoice = $('<li><ul></ul></li>').append($addChoiceLink);
+
+            var sizeListQuestions = $('ul.questions li:last ul.choices li').length;
+            //var sizeListChoices = $('ul.questions ul.choices').length;
+            var sizeListChoices = $('ul.questions li:last ul.choices').length;
+            //var collectionHolderChoice = $('ul.questions ul.choices');
+            var collectionHolderChoice = $('ul.questions li:last ul.choices');
+
+            //console.log($('ul.questions li').eq(sizeListQuestions-2));
+            //console.log($('ul.questions ul.choices li').length);
+
+            var collectionHolderChoiceAdd = $('ul.questions li:last ul.choices li').eq(sizeListQuestions-2);
+            collectionHolderChoiceAdd.append($newLinkLiChoice);
+            //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
+            collectionHolderChoice.data('index', sizeListChoices);
+
+            $addChoiceLink.on('click', function(e) {
+                e.preventDefault();
+                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm(collectionHolderChoice, $newLinkLiChoice);
+            });*/
+        }
+
+        function addChoiceForm($collectionHolder, $newLinkLi, indexQuestion) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            console.log(prototype);
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+            console.log(index);
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            newForm = newForm.replace(/questions_0/g, "question_"+indexQuestion);
+            newForm = newForm.replace(/\[questions\]\[0\]/g, "[questions]["+indexQuestion+"]");
             console.log(newForm);
 
             // increase the index with one for the next item
@@ -173,6 +244,63 @@
             e.preventDefault();
             addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
         });*/
+
+
+        /*function addQuestionForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            console.log(prototype);
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+            console.log(index);
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            console.log(prototype.replace(/__name__/g, index));
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li class="question"></li>').append(newForm+"<br>");
+
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-question">x</a>');
+            $newLinkLi.before($newFormLi);
+
+            // handle the removal, just for this example
+            $('.remove-question').click(function(e) {
+                e.preventDefault();
+                $(this).parent().remove();
+                return false;
+            });
+
+            // Ajout d'une possibilité de réponse pour une question
+            var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
+            var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
+
+            var sizeListQuestions = $('ul.questions li').length;
+            var sizeListChoices = $('ul.questions ul.choices').length;
+            var collectionHolderChoice = $('ul.questions ul.choices');
+
+            //console.log($('ul.questions li').eq(sizeListQuestions-2));
+            //console.log($('ul.questions ul.choices li').length);
+
+            var collectionHolderChoiceAdd = $('ul.questions li').eq(sizeListQuestions-2);
+            collectionHolderChoiceAdd.append($newLinkLiChoice);
+            //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
+            collectionHolderChoice.data('index', sizeListChoices);
+
+            $addChoiceLink.on('click', function(e) {
+                e.preventDefault();
+                //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm(collectionHolderChoice, $newLinkLiChoice);
+            });
+        }*/
+
+
     </script>
 
 {% endblock %}
