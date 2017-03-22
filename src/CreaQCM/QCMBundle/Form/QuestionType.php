@@ -17,6 +17,7 @@ class QuestionType extends AbstractType
         $builder->add('ask', TextType::class, array(
             'label' => 'Question',
             'attr' => array('class' => 'col-lg-12'),
+            'required' => true,
         ));
         $builder->add('choices', CollectionType::class, array(
             'entry_type' => ChoiceType::class,

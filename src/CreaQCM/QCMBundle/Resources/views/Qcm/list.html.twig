@@ -8,20 +8,26 @@
         </div>
         <div class="panel-body">
             <div class="col-sm-offset-1 col-sm-10">
-                <ul class="list-group">
-                    {% for qcm in listQCM %}
-                        <li class="list-group-item">
-                            {{ qcm.name }}
-                            <span class="show-menu">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                            </span>
-                            <ul class="list-group-submenu">
-                                <li class="list-group-submenu-item primary"><a href="{{ path('crea_qcmqcm_getAnswer', {'id': qcm.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></li>
-                                <li class="list-group-submenu-item warning"><span class="glyphicon glyphicon-ok"></span></li>
-                            </ul>
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% if listQCM|length > 0 %}
+                    <ul class="list-group">
+                        {% for qcm in listQCM %}
+                            <li class="list-group-item">
+                                {{ qcm.name }}
+                                <span class="show-menu">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </span>
+                                <ul class="list-group-submenu">
+                                    <li class="list-group-submenu-item primary"><a href="{{ path('crea_qcmqcm_getAnswer', {'id': qcm.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></li>
+                                    <li class="list-group-submenu-item warning"><span class="glyphicon glyphicon-ok"></span></li>
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="text-center">
+                        <h2>Aucun QCM n'est disponible pour le moment !</h2>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

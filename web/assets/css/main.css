@@ -8,6 +8,14 @@ ul {
     --width: 100%;
 }
 
+.responseTrue{
+    color: green;
+}
+
+.responseFalse{
+    color: red;
+}
+
 /*ul.questions li.question div.form-group {
     width: 50%;
 }*/

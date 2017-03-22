@@ -92,7 +92,7 @@
             addChoiceLink.on('click', function(e) {
                 e.preventDefault();
                 //addChoiceForm(collectionHolderChoice, newLinkLiChoice);
-                addChoiceForm(collectionHolderChoice, newLinkLiChoice, 0);
+                addChoiceForm(collectionHolderChoice, newLinkLiChoice, 0, true);
             });
         });
 
@@ -154,14 +154,16 @@
             //collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
             collectionHolderChoice.data('index', sizeListChoices);
 
+            addChoiceForm(collectionHolderChoice, addChoiceLinkLi, indexQuestion, false);
+
             addChoiceLink.on('click', function(e) {
                 e.preventDefault();
                 //addChoiceForm(collectionHolderChoice, newLinkLiChoice);
-                addChoiceForm(collectionHolderChoice, addChoiceLinkLi, indexQuestion);
+                addChoiceForm(collectionHolderChoice, addChoiceLinkLi, indexQuestion, true);
             });
         }
 
-        function addChoiceForm(collectionHolder, newLinkLi, indexQuestion) {
+        function addChoiceForm(collectionHolder, newLinkLi, indexQuestion, deleteChoice) {
             // Get the data-prototype explained earlier
             var prototype = collectionHolder.data('prototype');
             console.log(prototype);
@@ -189,7 +191,9 @@
             // also add a remove button, just for this example
             //newFormLi.append('<input type="checkbox" name="myCheckbox[]" value="'+indexQuestion+'_'+sizeListChoices+'" />');
             newFormLi.append('<input type="checkbox" class="checkboxSelectResult" name="myCheckbox['+indexQuestion+']" value="'+indexQuestion+'"/>');
-            newFormLi.append('<a href="#" class="remove-choice" style="float: right;">x</a>');
+            if (deleteChoice === true){
+                newFormLi.append('<a href="#" class="remove-choice" style="float: right;">x</a>');
+            }
             newLinkLi.before(newFormLi);
 
             // handle the removal, just for this example

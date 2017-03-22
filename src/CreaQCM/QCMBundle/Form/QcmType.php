@@ -16,7 +16,8 @@ class QcmType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-            'label' => 'Nom du QCM:'
+            'label' => 'Nom du QCM:',
+            'required' => true,
         ));
         $builder->add('questions', CollectionType::class, array(
             'entry_type' => QuestionType::class,

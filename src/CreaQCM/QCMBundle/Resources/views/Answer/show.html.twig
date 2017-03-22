@@ -13,11 +13,12 @@
                     <input id="name" name="name" type="text" placeholder="Entrez votre nom..." class="form-control"/>
                     <br>
                 </div>
-                <ul class="questions">
+                <ul class="questions list-group">
                     {% for question in listQuestion %}
-                        <div class="form-group">
-                            <label>Question {{ loop.index }}: </label>
-                            <li class="question">{{ question['question'] }}
+
+                            <label class="list-group-item active">Question {{ loop.index }}: </label>
+                            <li class="question question list-group-item">
+                                <h4>{{ question['question'] }}</h4>
 
                                 {% set indexQuestion = loop.index %}
                                 <ul class="choices">
@@ -28,12 +29,14 @@
 
                                 <br>
                             </li>
-                        </div>
+
                     {% endfor %}
-                    <div class="form-group">
-                        <input type="submit" value="Envoyer" class="btn btn-primary"/>
-                    </div>
                 </ul>
+
+                <div class="form-group">
+                    <input type="submit" value="Envoyer" class="btn btn-primary"/>
+                </div>
+
             </form>
         </div>
     </div>

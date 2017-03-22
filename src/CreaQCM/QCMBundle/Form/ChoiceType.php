@@ -13,7 +13,8 @@ class ChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('value', TextType::class, array(
-            'label' => 'Réponse'
+            'label' => 'Réponse',
+            'required' => true,
         ));
     }
 

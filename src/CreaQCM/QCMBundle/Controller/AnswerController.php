@@ -45,11 +45,48 @@ class AnswerController extends Controller
                 }
             }
 
+            $listQuestion = array();
+            foreach ($questions as $key => $question) {
+
+                $listQuestion[$key]['question'] = $question->getAsk();
+                $choices = $eManager->getRepository('CreaQCMQCMBundle:Choice')->findBy(array('question' => $question->getId()));
+
+                foreach ($choices as $key2 => $choice) {
+                    $listQuestion[$key]['choices'][$key2] = $choice->getValue();
+                }
+
+                $listQuestion[$key]['response'] = explode(',',$questions[$key]->getResponse());
+            }
+
             var_dump($listResult);
             var_dump($listSucessError);
+            var_dump($listQuestion);
+            //var_dump($listQuestion[1]['response']);
 
-            //return $this->redirectToRoute('crea_qcmqcm_list');
-            //return $this->render('ynovtpNoteBundle:Fibo:result.html.twig', array('listFiboNombre' => $listFiboNombre, 'dernierFiboNombre' => $dernierFiboNombre));
+            $aListResult = array();
+            foreach ($listResult as $key => $result) {
+                $aListResult[$key] = explode(',',$result);
+            }
+
+            var_dump($aListResult);
+
+
+            $nbQuestion = sizeof($questions);
+            $nbResponseTrue = count(array_filter($listSucessError));
+            var_dump($nbQuestion);
+            var_dump($nbResponseTrue);
+
+            $note = round(($nbResponseTrue / $nbQuestion) * 20);
+            var_dump($note);
+
+            return $this->render('CreaQCMQCMBundle:Answer:result.html.twig', array(
+                'name' => $name,
+                'note' => $note,
+                'qcm' => $qcm,
+                'listSucessError' => $listSucessError,
+                'listResult' => $aListResult,
+                'listQuestion' => $listQuestion
+            ));
         }
         else{
             return $this->redirectToRoute('crea_qcmqcm_list');
