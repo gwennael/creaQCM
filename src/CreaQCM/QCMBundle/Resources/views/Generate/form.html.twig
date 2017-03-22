@@ -17,9 +17,12 @@
 
                         <ul class="choices" data-prototype="{{ form_widget(question.choices.vars.prototype)|e('html_attr') }}">
                             {% for choice in question.choices %}
-                                <br><li>{{ form_row(choice.value) }}</li>
+                                <br>
+                                <li>{{ form_row(choice.value) }}</li>
+                                <input type="checkbox" class="checkboxSelectResult" name="myCheckbox[0]" value="0"/>
                             {% endfor %}
                         </ul>
+                        {{ form_row(question.response) }}
                         <br><br><br><br>
                     </li>
                 {% endfor %}
@@ -34,6 +37,24 @@
     </div>
 
     <script>
+        var selectResults = new Array();
+
+        $('.checkboxSelectResult').change(function() {
+            console.log(this.value);
+            var values = $("input[name='myCheckbox["+this.value+"]']:checkbox").map(function (key, value) {
+                //return this.value;
+                if ($(this).is(':checked')){
+                    console.log("OK");
+                    return key;
+                }
+            }).get();
+
+            selectResults[this.value] = values;
+            console.log(selectResults);
+
+            $('#crea_qcmqcmbundle_qcm_type_questions_'+this.value+'_response').val(selectResults[this.value].toString());
+        });
+
         $(document).ready(function() {
 
             // Ajout d'une question au QCM
@@ -54,7 +75,7 @@
                 addQuestionForm($collectionHolderQuestion, $newLinkLiQuestion);
                 console.log($(this).parent().parent().find('li.question:last').find('div.form-group').eq(1));
                 //$('<br>').insertAfter($(this).parent().parent().find('li.question:last').find('div.form-group').eq(1));
-                ($(this).parent().parent().find('li.question:last')).append('<br><br><br><br>');
+                $(this).parent().parent().find('li.question:last').append('<br><br><br><br>');
             });
 
             // Ajout d'une possibilité de réponse pour une question
@@ -71,10 +92,10 @@
             $addChoiceLink.on('click', function(e) {
                 e.preventDefault();
                 //addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
-                addChoiceForm($collectionHolderChoice, $newLinkLiChoice);
+                addChoiceForm($collectionHolderChoice, $newLinkLiChoice, 0);
             });
 
-			// Ajout d'une possibilité de réponse pour une question
+            // Ajout d'une possibilité de réponse pour une question
             /*var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
             var $newLinkLiChoice = $('<li></li>').append($addChoiceLink);
 
@@ -139,12 +160,15 @@
 
             // Ajout d'une possibilité de réponse pour une question
 
+            var sizeListQuestions = $('ul.questions li').length;
+            var indexQuestion = $('ul.questions li').eq(sizeListQuestions-2).find('div.indexQuestion').text();
+            console.log(indexQuestion);
+
             var $addChoiceLink = $('<a href="#" class="add_choice_link">Ajouter un choix</a>');
             var $addChoiceLinkLi = $('<li></li>').append($addChoiceLink);
             var $newFormUl = $('<ul class="choices"></ul>').append($addChoiceLinkLi);
-            var $newLinkLiChoice = $('<li></li>').append($newFormUl);
+            var $newLinkLiChoice = $('<li id="question'+indexQuestion+'"></li>').append($newFormUl);
 
-            var sizeListQuestions = $('ul.questions li').length;
             var sizeListChoices = $('ul.questions ul.choices').length;
             var collectionHolderChoice = $('ul.questions ul.choices');
 
@@ -155,9 +179,6 @@
             collectionHolderChoiceAdd.append($newLinkLiChoice);
             //$collectionHolderChoice.data('index', collectionHolderTest.find(':input').length);
             collectionHolderChoice.data('index', sizeListChoices);
-
-            var indexQuestion = $('ul.questions li').eq(sizeListQuestions-2).find('div.indexQuestion').text();
-            console.log(indexQuestion);
 
             $addChoiceLink.on('click', function(e) {
                 e.preventDefault();
@@ -226,10 +247,15 @@
             // increase the index with one for the next item
             $collectionHolder.data('index', index + 1);
 
+
+            var sizeListChoices = $('li#question'+indexQuestion+' ul.choices li').length;
+
             // Display the form in the page in an li, before the "Add a tag" link li
             var $newFormLi = $('<li></li>').append(newForm);
 
             // also add a remove button, just for this example
+            //$newFormLi.append('<input type="checkbox" name="myCheckbox[]" value="'+indexQuestion+'_'+sizeListChoices+'" />');
+            $newFormLi.append('<input type="checkbox" class="checkboxSelectResult" name="myCheckbox['+indexQuestion+']" value="'+indexQuestion+'"/>');
             $newFormLi.append('<a href="#" class="remove-choice">x</a>');
             $newLinkLi.before($newFormLi);
 
@@ -239,6 +265,16 @@
                 $(this).parent().remove();
                 return false;
             });
+
+            var values = $("input[name='myCheckbox["+indexQuestion+"]']:checkbox").map(function (key, value) {
+                //return this.value;
+                if ($(this).is(':checked')){
+                    console.log("OK");
+                    return key;
+                }
+            }).get();
+
+            console.log(values);
         }
 
 

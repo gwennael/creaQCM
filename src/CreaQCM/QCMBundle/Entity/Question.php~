@@ -29,14 +29,14 @@ class Question
     private $ask;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="responses", type="array")
+     * @ORM\Column(name="response", type="string", length=255)
      */
-    private $responses;
+    private $response;
 
     /**
-     * @ORM\OneToMany(targetEntity="Choice", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="Choice", mappedBy="question", cascade={"persist"})
      */
     protected $choices;
 
@@ -90,30 +90,6 @@ class Question
     }
 
     /**
-     * Set responses
-     *
-     * @param array $responses
-     *
-     * @return Question
-     */
-    public function setResponses($responses)
-    {
-        $this->responses = $responses;
-
-        return $this;
-    }
-
-    /**
-     * Get responses
-     *
-     * @return array
-     */
-    public function getResponses()
-    {
-        return $this->responses;
-    }
-
-    /**
      * Add choice
      *
      * @param \CreaQCM\QCMBundle\Entity\Choice $choice
@@ -123,6 +99,7 @@ class Question
     public function addChoice(\CreaQCM\QCMBundle\Entity\Choice $choice)
     {
         $this->choices[] = $choice;
+        $choice->setQuestion($this);
 
         return $this;
     }

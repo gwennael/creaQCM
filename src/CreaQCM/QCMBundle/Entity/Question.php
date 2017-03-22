@@ -29,11 +29,11 @@ class Question
     private $ask;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="responses", type="array")
+     * @ORM\Column(name="response", type="string", length=255)
      */
-    private $responses;
+    private $response;
 
     /**
      * @ORM\OneToMany(targetEntity="Choice", mappedBy="question", cascade={"persist"})
@@ -87,30 +87,6 @@ class Question
     public function getAsk()
     {
         return $this->ask;
-    }
-
-    /**
-     * Set responses
-     *
-     * @param array $responses
-     *
-     * @return Question
-     */
-    public function setResponses($responses)
-    {
-        $this->responses = $responses;
-
-        return $this;
-    }
-
-    /**
-     * Get responses
-     *
-     * @return array
-     */
-    public function getResponses()
-    {
-        return $this->responses;
     }
 
     /**
@@ -170,5 +146,29 @@ class Question
     public function getQcm()
     {
         return $this->qcm;
+    }
+
+    /**
+     * Set response
+     *
+     * @param string $response
+     *
+     * @return Question
+     */
+    public function setResponse($response)
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    /**
+     * Get response
+     *
+     * @return string
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }
