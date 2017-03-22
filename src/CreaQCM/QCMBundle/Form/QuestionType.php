@@ -23,7 +23,7 @@ class QuestionType extends AbstractType
             'allow_add'    => true,
             'by_reference' => false,
             'allow_delete' => true,
-            'label' => ' ',
+            'label' => false,
         ));
         $builder->add('response', HiddenType::class);
     }

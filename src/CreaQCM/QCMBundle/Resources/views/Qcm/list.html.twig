@@ -1,0 +1,30 @@
+{% extends 'CreaQCMQCMBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">Liste des QCMs disponibles:</div>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-offset-1 col-sm-10">
+                <ul class="list-group">
+                    {% for qcm in listQCM %}
+                        <li class="list-group-item">
+                            {{ qcm.name }}
+                            <span class="show-menu">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </span>
+                            <ul class="list-group-submenu">
+                                <li class="list-group-submenu-item primary"><span class="glyphicon glyphicon-remove"></span></li>
+                                <li class="list-group-submenu-item warning"><span class="glyphicon glyphicon-ok"></span></li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

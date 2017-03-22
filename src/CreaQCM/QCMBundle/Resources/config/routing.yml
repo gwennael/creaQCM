@@ -2,6 +2,14 @@ crea_qcmqcm_homepage:
     path:     /
     defaults: { _controller: CreaQCMQCMBundle:QCM:index }
 
+crea_qcmqcm_list:
+    path:     /liste
+    defaults: { _controller: CreaQCMQCMBundle:QCM:list }
+
+crea_qcmqcm_answer:
+    path:     /qcm/{id}
+    defaults: { _controller: CreaQCMQCMBundle:QCM:answer }
+
 crea_qcmqcm_generate:
     path:     /generer
     defaults: { _controller: CreaQCMQCMBundle:Generate:new }
