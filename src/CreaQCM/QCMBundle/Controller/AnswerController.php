@@ -2,6 +2,7 @@
 
 namespace CreaQCM\QCMBundle\Controller;
 
+use CreaQCM\QCMBundle\Entity\Resultat;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,8 @@ class AnswerController extends Controller
             $checkboxs = $request->request->get('myCheckbox');
 
             if (empty($checkboxs)){
-                return $this->redirectToRoute('crea_qcmqcm_list');
+                //return $this->redirectToRoute('crea_qcmqcm_list');
+                return $this->redirectToRoute('crea_qcmqcm_getAnswer', array('id' => $id));
             }
 
             $eManager = $this->getDoctrine()->getManager();
@@ -27,7 +29,7 @@ class AnswerController extends Controller
             $qcm = $eManager->getRepository('CreaQCMQCMBundle:Qcm')->find($id);
             $questions = $qcm->getQuestions()->getValues();
 
-            var_dump($qcm->getId());
+            //var_dump($qcm->getId());
 
             $listResult = array();
             $listSucessError = array();
@@ -36,11 +38,11 @@ class AnswerController extends Controller
                 $response = $questions[$key-1]->getResponse();
 
                 if ($listResult[$key-1] == $response){
-                    var_dump(true);
+                    //var_dump(true);
                     $listSucessError[$key-1] = true;
                 }
                 else{
-                    var_dump(false);
+                    //var_dump(false);
                     $listSucessError[$key-1] = false;
                 }
             }
@@ -58,9 +60,9 @@ class AnswerController extends Controller
                 $listQuestion[$key]['response'] = explode(',',$questions[$key]->getResponse());
             }
 
-            var_dump($listResult);
-            var_dump($listSucessError);
-            var_dump($listQuestion);
+            //var_dump($listResult);
+            //var_dump($listSucessError);
+            //var_dump($listQuestion);
             //var_dump($listQuestion[1]['response']);
 
             $aListResult = array();
@@ -68,16 +70,23 @@ class AnswerController extends Controller
                 $aListResult[$key] = explode(',',$result);
             }
 
-            var_dump($aListResult);
-
+            //var_dump($aListResult);
 
             $nbQuestion = sizeof($questions);
             $nbResponseTrue = count(array_filter($listSucessError));
-            var_dump($nbQuestion);
-            var_dump($nbResponseTrue);
+            //var_dump($nbQuestion);
+            //var_dump($nbResponseTrue);
 
             $note = round(($nbResponseTrue / $nbQuestion) * 20);
-            var_dump($note);
+            //var_dump($note);
+
+            $resultatEntity = new Resultat();
+            $resultatEntity->setQcm($qcm);
+            $resultatEntity->setUsername($name);
+            $resultatEntity->setResult($note);
+
+            $eManager->persist($resultatEntity);
+            $eManager->flush();
 
             return $this->render('CreaQCMQCMBundle:Answer:result.html.twig', array(
                 'name' => $name,

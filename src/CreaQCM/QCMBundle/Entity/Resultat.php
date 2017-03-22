@@ -29,9 +29,9 @@ class Resultat
     private $username;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="result", type="array")
+     * @ORM\Column(name="result", type="string")
      */
     private $result;
 
@@ -78,30 +78,6 @@ class Resultat
     }
 
     /**
-     * Set result
-     *
-     * @param array $result
-     *
-     * @return Resultat
-     */
-    public function setResult($result)
-    {
-        $this->result = $result;
-
-        return $this;
-    }
-
-    /**
-     * Get result
-     *
-     * @return array
-     */
-    public function getResult()
-    {
-        return $this->result;
-    }
-
-    /**
      * Set qcm
      *
      * @param \CreaQCM\QCMBundle\Entity\Qcm $qcm
@@ -123,5 +99,30 @@ class Resultat
     public function getQcm()
     {
         return $this->qcm;
+    }
+
+
+    /**
+     * Set result
+     *
+     * @param string $result
+     *
+     * @return Resultat
+     */
+    public function setResult($result)
+    {
+        $this->result = $result;
+
+        return $this;
+    }
+
+    /**
+     * Get result
+     *
+     * @return string
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 }

@@ -24,6 +24,7 @@ class QcmType extends AbstractType
             'allow_add'    => true,
             'by_reference' => false,
             'allow_delete' => true,
+            'label' => 'Questions',
         ));
 		$builder->add('Enregistrer', SubmitType::class, array(
             'attr' => array('class' => 'btn btn-primary'),

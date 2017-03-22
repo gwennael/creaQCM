@@ -10,7 +10,7 @@
             <form action="{{ path('crea_qcmqcm_postAnswer', {'id': qcm.id}) }}" method="post">
                 <div class="form-group">
                     <label>Nom:</label>
-                    <input id="name" name="name" type="text" placeholder="Entrez votre nom..." class="form-control"/>
+                    <input id="name" name="name" type="text" placeholder="Entrez votre nom..." class="form-control" required/>
                     <br>
                 </div>
                 <ul class="questions list-group">

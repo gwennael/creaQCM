@@ -8,26 +8,39 @@
         </div>
         <div class="panel-body">
             <div class="col-sm-offset-1 col-sm-10">
+
                 {% if listQCM|length > 0 %}
-                    <ul class="list-group">
-                        {% for qcm in listQCM %}
-                            <li class="list-group-item">
-                                {{ qcm.name }}
-                                <span class="show-menu">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </span>
-                                <ul class="list-group-submenu">
-                                    <li class="list-group-submenu-item primary"><a href="{{ path('crea_qcmqcm_getAnswer', {'id': qcm.id}) }}"><span class="glyphicon glyphicon-remove"></span></a></li>
-                                    <li class="list-group-submenu-item warning"><span class="glyphicon glyphicon-ok"></span></li>
-                                </ul>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content faq-cat-content">
+                        <div class="tab-pane active in fade" id="faq-cat-1">
+                            <div class="panel-group" id="accordion-cat-1">
+                                {% for qcm in listQCM %}
+                                    <div class="panel panel-default panel-faq">
+                                        <div class="panel-heading">
+                                            <a data-toggle="collapse" data-parent="#accordion-cat-1" href="#faq-cat-1-sub-{{ loop.index }}">
+                                                <h4 class="panel-title">
+                                                    {{ qcm.name }}
+                                                    <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
+                                                </h4>
+                                            </a>
+                                        </div>
+                                        <div id="faq-cat-1-sub-{{ loop.index }}" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <a href="{{ path('crea_qcmqcm_getAnswer', {'id': qcm.id}) }}" class="btn btn-default">Répondre au QCM</a>
+                                                <a href="" class="btn btn-default">Voir les statistiques</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                 {% else %}
                     <div class="text-center">
                         <h2>Aucun QCM n'est disponible pour le moment !</h2>
                     </div>
                 {% endif %}
+
             </div>
         </div>
     </div>

@@ -40,9 +40,9 @@ class QCMController extends Controller
             }
         }
 
-        echo '<pre>';
+        /*echo '<pre>';
         var_dump($listQuestion);
-        echo '</pre>';
+        echo '</pre>';*/
 
 
         return $this->render('CreaQCMQCMBundle:Answer:show.html.twig', array('listQuestion' => $listQuestion, 'qcm' => $qcm));
