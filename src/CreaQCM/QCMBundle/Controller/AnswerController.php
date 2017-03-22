@@ -30,19 +30,23 @@ class AnswerController extends Controller
             var_dump($qcm->getId());
 
             $listResult = array();
+            $listSucessError = array();
             foreach ($checkboxs as $key => $checkbox) {
-                $listResult[$key] = implode(',', $checkbox);
+                $listResult[$key-1] = implode(',', $checkbox);
                 $response = $questions[$key-1]->getResponse();
 
-                if ($listResult[$key] == $response){
+                if ($listResult[$key-1] == $response){
                     var_dump(true);
+                    $listSucessError[$key-1] = true;
                 }
                 else{
                     var_dump(false);
+                    $listSucessError[$key-1] = false;
                 }
             }
 
             var_dump($listResult);
+            var_dump($listSucessError);
 
             //return $this->redirectToRoute('crea_qcmqcm_list');
             //return $this->render('ynovtpNoteBundle:Fibo:result.html.twig', array('listFiboNombre' => $listFiboNombre, 'dernierFiboNombre' => $dernierFiboNombre));

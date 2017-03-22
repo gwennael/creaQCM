@@ -24,7 +24,9 @@ class QcmType extends AbstractType
             'by_reference' => false,
             'allow_delete' => true,
         ));
-		$builder->add('Enregistrer', SubmitType::class);
+		$builder->add('Enregistrer', SubmitType::class, array(
+            'attr' => array('class' => 'btn btn-primary'),
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
