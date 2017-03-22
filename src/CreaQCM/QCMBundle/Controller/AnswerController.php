@@ -17,14 +17,18 @@ class AnswerController extends Controller
         if ($request->isMethod('POST')) {
 
             $name = $request->request->get('name');
-            $checkboxs = $request->request->get('myCheckbox');
 
+            $checkboxs = $request->request->get('myCheckbox');
             if (empty($checkboxs)){
-                //return $this->redirectToRoute('crea_qcmqcm_list');
                 return $this->redirectToRoute('crea_qcmqcm_getAnswer', array('id' => $id));
             }
 
             $eManager = $this->getDoctrine()->getManager();
+
+            $resultat = $eManager->getRepository('CreaQCMQCMBundle:Resultat')->findBy(array('username' => $name, 'qcm' => $id));
+            if (!empty($resultat)){
+                return $this->redirectToRoute('crea_qcmqcm_getAnswer', array('id' => $id));
+            }
 
             $qcm = $eManager->getRepository('CreaQCMQCMBundle:Qcm')->find($id);
             $questions = $qcm->getQuestions()->getValues();

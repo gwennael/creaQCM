@@ -27,7 +27,7 @@
                                         <div id="faq-cat-1-sub-{{ loop.index }}" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <a href="{{ path('crea_qcmqcm_getAnswer', {'id': qcm.id}) }}" class="btn btn-default">Répondre au QCM</a>
-                                                <a href="" class="btn btn-default">Voir les statistiques</a>
+                                                <a href="{{ path('crea_qcmqcm_stats', {'id': qcm.id}) }}" class="btn btn-default">Voir les statistiques</a>
                                             </div>
                                         </div>
                                     </div>

@@ -17,3 +17,7 @@ crea_qcmqcm_generate:
 crea_qcmqcm_postAnswer:
     path:     /answer/qcm/{id}
     defaults: { _controller: CreaQCMQCMBundle:Answer:post }
+
+crea_qcmqcm_stats:
+    path:     /statistique/qcm/{id}
+    defaults: { _controller: CreaQCMQCMBundle:Stats:index }

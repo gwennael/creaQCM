@@ -1,0 +1,76 @@
+{% extends 'CreaQCMQCMBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title text-center">Statistique du questionnaire: {{ qcm.name }}</div>
+        </div>
+        <div class="panel-body">
+
+            <div id="moyenne">
+                <h3 class="text-center">La moyenne du questionnaire est de {{ moyenne }}/20.</h3>
+            </div>
+            <br><hr>
+
+            <div id="chartBar">
+                <h4 class="text-center">Notes obtenues sur 20</h4>
+                <canvas id="myChart"></canvas>
+            </div>
+            <br><br><br><hr>
+
+            <div id="tableResult">
+                <h4 class="text-center">Résultats obtenus par personne</h4><br>
+                <table class="table table-hover table-responsive text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nom</th>
+                            <th class="text-center">Résultat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.username }}</td>
+                            <td>{{ result.result }}/20</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        $(function () {
+
+            var data = {
+                labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
+                datasets: [
+                    {
+                        label: "Note sur 20 par questionnaire envoyé",
+                        fillColor: "rgba(151,187,205,0.5)",
+                        strokeColor: "rgba(151,187,205,0.8)",
+                        highlightFill: "rgba(151,187,205,0.75)",
+                        highlightStroke: "rgba(151,187,205,1)",
+                        data: [{{ listResultDataChartString }}]
+                    }
+                ]
+            };
+
+            var option = {
+                responsive: true,
+            };
+
+            // Get the context of the canvas element we want to select
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myBarChart = new Chart(ctx).Bar(data, option); //'Line' defines type of the chart.
+
+
+        });
+
+    </script>
+
+{% endblock %}
