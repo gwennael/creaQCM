@@ -7,6 +7,13 @@
             <div class="panel-title text-center">Questionnaire: {{ qcm.name }}</div>
         </div>
         <div class="panel-body">
+
+            {% for flashMessage in app.session.flashbag.get('info') %}
+                <div class="flash-notice alert alert-info">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
             <form action="{{ path('crea_qcmqcm_postAnswer', {'id': qcm.id}) }}" method="post">
                 <div class="form-group">
                     <label>Nom:</label>

@@ -22,7 +22,7 @@ class AnswerController extends Controller
         foreach ($questions as $key => $question) {
             $listQuestion[$key]['question'] = $question->getAsk();
             $choices = $eManager->getRepository('CreaQCMQCMBundle:Choice')->findBy(array('question' => $question->getId()));
-            //var_dump($choices[0]->getValue());
+
             foreach ($choices as $key2 => $choice) {
                 $listQuestion[$key]['choices'][$key2] = $choice->getValue();
             }
@@ -41,20 +41,21 @@ class AnswerController extends Controller
 
             $name = $request->request->get('name');
 
+            $eManager = $this->getDoctrine()->getManager();
+            $qcm = $eManager->getRepository('CreaQCMQCMBundle:Qcm')->find($id);
+            $questions = $qcm->getQuestions()->getValues();
+
             $checkboxs = $request->request->get('myCheckbox');
-            if (empty($checkboxs)){
+            if (empty($checkboxs) || sizeof($checkboxs) < sizeof($questions)){
+                $request->getSession()->getFlashBag()->add('info', 'Vous devez sélectionner au moins une réponse parmis les propositions pour chaque question !');
                 return $this->redirectToRoute('crea_qcmqcm_getAnswer', array('id' => $id));
             }
-
-            $eManager = $this->getDoctrine()->getManager();
 
             $resultat = $eManager->getRepository('CreaQCMQCMBundle:Resultat')->findBy(array('username' => $name, 'qcm' => $id));
             if (!empty($resultat)){
+                $request->getSession()->getFlashBag()->add('info', 'Un questionnaire a déjà été soumit sous le nom de '.$name.' pour "'.$qcm->getName().'" !');
                 return $this->redirectToRoute('crea_qcmqcm_getAnswer', array('id' => $id));
             }
-
-            $qcm = $eManager->getRepository('CreaQCMQCMBundle:Qcm')->find($id);
-            $questions = $qcm->getQuestions()->getValues();
 
             //var_dump($qcm->getId());
 

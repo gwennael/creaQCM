@@ -31,7 +31,7 @@ class Question
     /**
      * @var string
      *
-     * @ORM\Column(name="response", type="string", length=255)
+     * @ORM\Column(name="response", type="string", length=255, nullable=true)
      */
     private $response;
 

@@ -7,6 +7,12 @@
             <div class="panel-title">Génération d'un QCM:</div>
         </div>
         <div class="panel-body">
+            {% for flashMessage in app.session.flashbag.get('info') %}
+                <div class="flash-notice alert alert-info">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
             {{ form_start(form, {attr: {'class': ''}} ) }}
             {{ form_row(form.name) }}
 
@@ -31,6 +37,8 @@
                 {% endfor %}
             </ul>
 
+            <input type="text" id="checkInputValid" name="checkValid" value="1" hidden/>
+
             {{ form_rest(form) }}
             {{ form_widget(form.Enregistrer) }}
 
@@ -41,6 +49,7 @@
 
     <script>
         var selectResults = new Array();
+        var indexQuestionMax = 0;
 
         $('.checkboxSelectResult').change(function() {
             console.log(this.value);
@@ -57,6 +66,19 @@
 
             $('#crea_qcmqcmbundle_qcm_type_questions_'+this.value+'_response').val(selectResults[this.value].toString());
         });
+
+        $('form[name=crea_qcmqcmbundle_qcm_type]').submit(function(e){
+            //e.preventDefault();
+            console.log("PASSE SUBMIT !");
+            for (var i=0; i<=indexQuestionMax; i++){
+                console.log(selectResults[i]);
+                if (selectResults[i] == null){
+                    console.log("PASSE UNDEFINED !");
+                    $('#checkInputValid').val(0).toString();
+                    console.log($('#checkInputValid').val());
+                }
+            }
+        })
 
         $(document).ready(function() {
 
@@ -200,6 +222,13 @@
 
                 $('#crea_qcmqcmbundle_qcm_type_questions_'+this.value+'_response').val(selectResults[this.value].toString());
             });
+
+            //selectResults[indexQuestion] = null;
+            console.log(selectResults);
+
+            if (indexQuestion > indexQuestionMax){
+                indexQuestionMax = indexQuestion;
+            }
         }
 
     </script>
