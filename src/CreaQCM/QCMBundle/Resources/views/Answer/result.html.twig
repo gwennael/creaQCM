@@ -74,7 +74,7 @@
                                     {% endfor %}
                                     .
                                 {% else %}
-                                    La réponse juste est "{{ listQuestion[loop.index-1]['choices'][listResult[loop.index-1][0]] }}".
+                                    La réponse juste est "{{ listQuestion[loop.index-1]['choices'][listQuestion[loop.index-1]['response'][0]] }}".
                                 {% endif %}
                             </p>
 
