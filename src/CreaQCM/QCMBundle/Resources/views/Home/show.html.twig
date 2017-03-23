@@ -1,0 +1,16 @@
+{% extends 'CreaQCMQCMBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <h3>Bienvenue sur Crea-QCM</h3>
+
+    <br>
+
+    <img id="imgHomeQCM" src="{{ app.request.getSchemeAndHttpHost() ~ asset('/assets/img/qcm.jpg') }}" alt="QCM" width="50%">
+
+    <p>Crea-QCM est une application web ayant sa fonctionnalité principale basé sur les questionnaires à choix multiples.</p>
+    <p>Cette application web est divisé en deux grandes parties qui sont la partie création/génération de QCMs personnalisés (autant de questions que l’utilisateur souhaite) et la partie "traitement" des QCMs.</p>
+    <p>Pour accéder aux différentes fonctionnalitées de Crea-QCM, il vous suffit simplement de parcourir le menu, ci-dessus, et de sélectionner celle qui vous intéresse.</p>
+
+
+{% endblock %}

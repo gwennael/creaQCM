@@ -8,7 +8,7 @@ crea_qcmqcm_list:
 
 crea_qcmqcm_getAnswer:
     path:     /qcm/{id}
-    defaults: { _controller: CreaQCMQCMBundle:QCM:answer }
+    defaults: { _controller: CreaQCMQCMBundle:Answer:index }
 
 crea_qcmqcm_generate:
     path:     /generer

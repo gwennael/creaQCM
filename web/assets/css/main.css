@@ -20,7 +20,11 @@ ul {
     width: 50%;
 }*/
 
+img#imgHomeQCM{
+    float: right;
+}
 
+/* ////////////////// Bootstrap Snippet ////////////////// */
 body {
     --padding-top: 30px;
 }

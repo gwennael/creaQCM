@@ -8,7 +8,7 @@ class QCMController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('CreaQCMQCMBundle::layout.html.twig');
+        return $this->render('CreaQCMQCMBundle:Home:show.html.twig');
     }
 
     public function listAction()
