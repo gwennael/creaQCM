@@ -1,5 +1,9 @@
 {% extends 'CreaQCMQCMBundle::layout.html.twig' %}
 
+{% block title %}
+    Génération d'un QCM - {{ parent() }}
+{% endblock %}
+
 {% block content %}
 
     <div class="panel panel-default">
@@ -7,6 +11,9 @@
             <div class="panel-title">Génération d'un QCM:</div>
         </div>
         <div class="panel-body">
+            <h3 id="warningGenerateQCM">N'oubliez pas de cocher au moins une checkbox par question sinon votre résultat sera fossé quand vous répondrez au QCM !</h3>
+            <span>La vérification des checkbox comporte encore des problèmes :( .</span><br><br><br>
+
             {% for flashMessage in app.session.flashbag.get('info') %}
                 <div class="flash-notice alert alert-info">
                     {{ flashMessage }}
@@ -49,7 +56,7 @@
 
     <script>
         var selectResults = new Array();
-        var indexQuestionMax = 0;
+        //selectResults[0] = [];
 
         $('.checkboxSelectResult').change(function() {
             console.log(this.value);
@@ -67,18 +74,37 @@
             $('#crea_qcmqcmbundle_qcm_type_questions_'+this.value+'_response').val(selectResults[this.value].toString());
         });
 
-        $('form[name=crea_qcmqcmbundle_qcm_type]').submit(function(e){
+        /*
+            Essai de vérification s'il y a au moins une checkbox de cochée pour chaque question en vain.
+            Fonctionne bien la première fois mais après ma redirection impossible
+        */
+        /*$('form[name=crea_qcmqcmbundle_qcm_type]').submit(function(e){
             //e.preventDefault();
-            console.log("PASSE SUBMIT !");
-            for (var i=0; i<=indexQuestionMax; i++){
-                console.log(selectResults[i]);
-                if (selectResults[i] == null){
-                    console.log("PASSE UNDEFINED !");
-                    $('#checkInputValid').val(0).toString();
-                    console.log($('#checkInputValid').val());
-                }
+
+            var nbQuestion = $('.question').length;
+
+            if (selectResults.length == 0 || selectResults.length < nbQuestion){
+                console.log("NULL SELECT");
+                $('#checkInputValid').val(0).toString();
             }
-        })
+            else{
+                $('#checkInputValid').val(1).toString();
+                selectResults.forEach(function(selectResult, key) {
+                    console.log(selectResult);
+                    if (selectResult.length == 0){
+                        console.log("NULL SELECT 2_ "+key);
+                        console.log($('.question').length);
+                        $('#checkInputValid').val(0).toString();
+                    }
+                    //else{
+                        //console.log("NOT NULL SELECT 2_ "+key);
+                        //console.log($('ul.questions li').length);
+                        //$('#checkInputValid').val(1).toString();
+                    //}
+                });
+            }
+        });*/
+
 
         $(document).ready(function() {
 
@@ -223,12 +249,7 @@
                 $('#crea_qcmqcmbundle_qcm_type_questions_'+this.value+'_response').val(selectResults[this.value].toString());
             });
 
-            //selectResults[indexQuestion] = null;
             console.log(selectResults);
-
-            if (indexQuestion > indexQuestionMax){
-                indexQuestionMax = indexQuestion;
-            }
         }
 
     </script>

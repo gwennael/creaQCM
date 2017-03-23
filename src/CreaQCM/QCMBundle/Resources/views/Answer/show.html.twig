@@ -1,5 +1,9 @@
 {% extends 'CreaQCMQCMBundle::layout.html.twig' %}
 
+{% block title %}
+    QCM: {{ qcm.name }} - {{ parent() }}
+{% endblock %}
+
 {% block content %}
 
     <div class="panel panel-default">

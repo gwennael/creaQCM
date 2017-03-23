@@ -16,6 +16,10 @@ ul {
     color: red;
 }
 
+#warningGenerateQCM{
+    color: red;
+}
+
 /*ul.questions li.question div.form-group {
     width: 50%;
 }*/

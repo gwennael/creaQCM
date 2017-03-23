@@ -20,7 +20,12 @@ class StatsController extends Controller
         }
         //var_dump($listResult);
 
-        $moyenne = round(array_sum($listResult)/sizeof($listResult), 2);
+        if (sizeof($results) > 0){
+            $moyenne = round(array_sum($listResult)/sizeof($listResult), 2);
+        }
+        else{
+            $moyenne = 0;
+        }
         //var_dump($moyenne);
 
         $listResultDataChart = array();
