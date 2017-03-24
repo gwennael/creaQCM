@@ -30,7 +30,7 @@ class GenerateController extends Controller
         $form->handleRequest($request);
 
         $checkValid = $request->request->get('checkValid');
-        var_dump($checkValid);
+        //var_dump($checkValid);
 
         if ($checkValid == "0"){
             $request->getSession()->getFlashBag()->add('info', 'Vous devez sélectionner au moins une réponse parmis vos propositions pour chaque question !');
